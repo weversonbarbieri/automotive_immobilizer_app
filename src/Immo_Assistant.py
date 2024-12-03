@@ -2,16 +2,16 @@ import streamlit as st
 import pandas as pd
 
 # Load the DataFrame and save it in the variable df.
-df = pd.read_excel('year_make_model_df.xlsx')
+df = pd.read_excel('C:\\Language_Projects\\Language_Projects\\Python\\Flagship_1\\Immo_Assistant.app\\notesbooks\\year_make_model_df.xlsx')
 
 # Converting all values in column Model to string, as some of models are numbers, for instance BMWs 318, 328, 525
 df = df.astype({'Model':'string'})
 
 # Load the dataframes of makes: Ford, Mercury, Lincoln, Mazda, Chevrolet, Pontiac, Cadillac, Buick, Oldsmobile, GMC, Saturn, Hummer
-df_ford_st = pd.read_pickle('df_ford_new.pkl')
-df_lincoln_st = pd.read_pickle('df_lincoln_updated.pkl')
-df_mercury_st = pd.read_pickle('df_mercury_updated.pkl')
-df_mazda_st = pd.read_pickle('df_mazda_updated.pkl')
+df_ford_st = pd.read_pickle('C:\\Language_Projects\\Language_Projects\\Python\\Flagship_1\\Immo_Assistant.app\\dataframe_each_make_pkl_file\\df_ford_new.pkl')
+df_lincoln_st = pd.read_pickle('C:\\Language_Projects\\Language_Projects\\Python\\Flagship_1\\Immo_Assistant.app\\dataframe_each_make_pkl_file\\df_lincoln_updated.pkl')
+df_mercury_st = pd.read_pickle('C:\\Language_Projects\\Language_Projects\Python\\Flagship_1\\Immo_Assistant.app\\dataframe_each_make_pkl_file\\df_mercury_updated.pkl')
+df_mazda_st = pd.read_pickle('C:\Language_Projects\\Language_Projects\\Python\\Flagship_1\\Immo_Assistant.app\\dataframe_each_make_pkl_file\\df_mazda_updated.pkl')
 df_chevrolet_st = pd.read_pickle('df_chevy_filtered.pkl') 
 df_pontiac_st = pd.read_pickle('df_pontiac.pkl')
 df_cadillac_st = pd.read_pickle('df_cadillac.pkl')
@@ -20,6 +20,8 @@ df_oldsmobile_st = pd.read_pickle('df_oldsmobile.pkl')
 df_gmc_st = pd.read_pickle('df_gmc.pkl')
 df_saturn_st = pd.read_pickle('df_saturn.pkl')
 df_hummer_st = pd.read_pickle('df_hummer.pkl')
+df_land_rover_st = pd.read_pickle('df_land_rover.pkl')
+df_mini_st = pd.read_pickle('df_mini.pkl')
 
 # Create a dictionary with the dataframes from each make
 dataframes_each_make = {
@@ -34,7 +36,9 @@ dataframes_each_make = {
                         'Oldsmobile': df_oldsmobile_st,
                         'GMC': df_gmc_st,
                         'Saturn': df_saturn_st,
-                        'Hummer': df_hummer_st
+                        'Hummer': df_hummer_st,
+                        'Land Rover': df_land_rover_st,
+                        'Mini': df_mini_st
 }
 
 # STREAMLIT CODE
@@ -65,4 +69,4 @@ else:
     st.write("Year/Make/Model not avaiable in the data base")
 
 
-# python -m streamlit run 'C:\Language_Projects\Language_Projects\Python\Flagship_1\Immo_Assistant.app\Immo_Assistant.py'
+# python -m streamlit run 'C:\Language_Projects\Language_Projects\Python\Flagship_1\Immo_Assistant.app\src\Immo_Assistant.py'
