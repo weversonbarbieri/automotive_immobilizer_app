@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import requests
 
-
-
 # Get the url containing the main dataframe from the remote repository
 url_df = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/data/year_make_model_df.xlsx'
 # Requests the HTTP from the GitHub URL
@@ -18,81 +16,50 @@ df = pd.read_excel(df_content)
 df = df.astype({'Model':'string'})
 
 # Store the urls in a variable
-url_acura_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_acura_updated.pkl'
-url_audi_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_audi_updated.pkl'
-url_bmw_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_bmw_updated.pkl'
-url_buick_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_buick.pkl'
-url_cadillac_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_cadillac.pkl'
-url_chevrolet_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_chevy_filtered.pkl'
-url_chrysler_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_chrysler_updated.pkl'
-url_dodge_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_dodge_updated.pkl'
-url_fiat_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_fiat_updated.pkl'
-url_ford_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_ford_new.pkl'
-url_gmc_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_gmc.pkl'
-url_honda_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_honda_updated.pkl'
-url_hummer_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_hummer.pkl'
-url_infiniti_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_infiniti_up_to_dated.pkl'
-url_jaguar_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_jaguar_up_to_dated.pkl'
-url_jeep_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_jeep_updated.pkl'
-url_land_rover_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_land_rover_updated.pkl'
-url_lexus_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_lexus_updated.pkl'
-url_lincoln_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_lincoln_updated.pkl'
-url_mazda_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_mazda_updated.pkl'
-url_mercury_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_mercury_updated.pkl'
-url_mini_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_mini_updated.pkl'
-url_mitsubishi = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_mitsubishi_upddated.pkl'
-url_nissan_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_nissan_updated.pkl'
-url_oldsmobile_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_oldsmobile.pkl'
-url_plymouth_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_plymouth_updated.pkl'
-url_pontiac_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_pontiac.pkl'
-url_rolls_royce_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_rolls_royce_updated.pkl'
-url_saturn_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_saturn.pkl'
-url_scion_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_scion_updated.pkl'
-url_subaru_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_subaru_updated.pkl'
-url_toyota_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_toyota_updated.pkl'
-url_vw_pkl = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_pkl_file/df_vw_updated.pkl' 
-
-
-# Load the dataframes of makes: Ford, Mercury, Lincoln, Mazda, Chevrolet, Pontiac, Cadillac, Buick, Oldsmobile, GMC, Saturn, Hummer
+url_acura = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_acura_updated.xlsx'
+url_audi = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_audi_updated.xlsx'
+url_bmw = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_bmw_updated.xlsx'
+url_buick = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_buick.xlsx'
+url_cadillac = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_cadillac.xlsx'
+url_chevrolet = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_chevy_filtered.xlsx'
+url_chrysler = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_chrysler_updated.xlsx'
+url_dodge = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_dodge_updated.xlsx'
+url_fiat = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_fiat_updated.xlsx'
+url_ford = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_ford_new.xlsx'
+url_gmc = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_gmc.xlsx'
+url_honda = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_honda_updated.xlsx'
+url_hummer = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_hummer.xlsx'
+url_infiniti = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_infiniti_up_to_dated.xlsx'
+url_jaguar = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_jaguar_up_to_dated.xlsx'
+url_jeep = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_jeep_updated.xlsx'
+url_land_rover = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_land_rover_updated.xlsx'
+url_lexus = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_lexus_updated.xlsx'
+url_lincoln = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_lincoln_updated.xlsx'
+url_mazda = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_mazda_updated.xlsx'
+url_mercury = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_mercury_updated.xlsx'
+url_mini = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_mini_updated.xlsx'
+url_mitsubishi = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_mitsubishi_upddated.xlsx'
+url_nissan = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_nissan_updated.xlsx'
+url_oldsmobile = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_oldsmobile.xlsx'
+url_plymouth = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_plymouth_updated.xlsx'
+url_pontiac = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_pontiac.xlsx'
+url_rolls_royce = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_rolls_royce_updated.xlsx'
+url_saturn = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_saturn.xlsx'
+url_scion = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_scion_updated.xlsx'
+url_subaru = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_subaru_updated.xlsx'
+url_toyota = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_toyota_updated.xlsx'
+url_vw = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_vw_updated.xlsx' 
 
 
 # Create a dictionary with the dataframes from each make
-dataframes_each_make = {
-                        'Ford': df_ford_st,
-                        'Lincoln': df_lincoln_st,
-                        'Mercury': df_mercury_st,
-                        'Mazda': df_mazda_st,
-                        'Chevrolet': df_chevrolet_st,
-                        'Pontiac': df_pontiac_st,
-                        'Cadillac': df_cadillac_st,
-                        'Buick': df_buick_st,
-                        'Oldsmobile': df_oldsmobile_st,
-                        'GMC': df_gmc_st,
-                        'Saturn': df_saturn_st,
-                        'Hummer': df_hummer_st,
-                        'Land Rover': df_land_rover_st,
-                        'Mini': df_mini_st,
-                        'Acura': df_acura_st,
-                        'Audi': df_audi_st,
-                        'BMW': df_bmw_st,
-                        'Chrysler': df_chrysler_st,
-                        'Dodge': df_dodge_st,
-                        'Fiat': df_fiat_st,
-                        'Honda': df_honda_st,
-                        'Infiniti': df_infiniti_st,
-                        'Jaguar': df_jaguar_st,
-                        'Jeep': df_jeep_st,
-                        'Land Rover': df_land_rover_st,
-                        'Lexus': df_lexus_st,
-                        'Mitsubishi': df_mitsubishi_st,
-                        'Nissan': df_nissan_st,
-                        'Plymouth': df_plymouth_st,
-                        'Rolls-Royce': df_rolls_royce_st,
-                        'Scion': df_scion_st,
-                        'Subaru': df_subaru_dt,
-                        'Toyota': df_toyota_st,
-                        'Volkswagen': df_vw_st
-}
+dataframes_urls = pd.DataFrame({'Makes': ['Acura', 'Audi', 'BMW','Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Dodge', 'Fiat', 'Ford', 'GMC',
+                                           'Honda', 'Hummer', 'infiniti', 'Jaguar', 'Jeep', 'Land Rover', 'Lexus', 'Lincoln', 'Mazda', 'Mercury',
+                                           'Mini', 'Mitsubishi', 'Nissan', 'Oldsmobile', 'Plymouth', 'Pontiac', 'Rolls-Royce', 'Saturn', 'Scion', 
+                                           'Subaru', 'Toyota', 'Volkswagen'],
+                                'URLs': [url_acura, url_audi, url_bmw, url_buick, url_cadillac, url_chevrolet, url_chrysler, url_dodge, url_fiat, 
+                                url_ford, url_gmc, url_honda, url_hummer, url_infiniti, url_jaguar, url_jeep, url_land_rover, url_lexus,
+                                url_lincoln, url_mazda, url_mercury, url_mini, url_mitsubishi, url_nissan, url_oldsmobile, url_plymouth, 
+                                url_pontiac, url_rolls_royce, url_saturn, url_scion, url_subaru, url_toyota, url_vw]})
 
 # STREAMLIT CODE
 
@@ -106,11 +73,26 @@ makes = df['Make'].unique()
 sorted_makes = sorted(makes)
 selected_make = st.sidebar.selectbox('Make: ', (sorted_makes))
 
-filtered_model = dataframes_each_make.get(selected_make)
-models = filtered_model['Model'].unique()
+# Function to convert the url link to .xlsx file
+def convert_url_to_xlsx(url_make):
+    # Store the raw content from the url link into a variable
+    get_url = requests.get(url_make)
+    # Convert the url link to bytes
+    get_content = get_url.content
+    # Return the bytes content into .xlsx file
+    return pd.read_excel(get_content)
+
+filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
+
+for index in filtered_make.index:
+    index_selected = index
+
+selected_url = filtered_make.at[index_selected, 'URLs']
+df_selected = convert_url_to_xlsx(selected_url)
+models = df_selected['Model'].unique()
 sorted_models = sorted(models)
 selected_model = st.sidebar.selectbox('Model: ', (sorted_models))
-final_df = filtered_model[(filtered_model['Year'] == selected_year) & (filtered_model['Model'] == selected_model)]
+final_df = df_selected[(df_selected['Year'] == selected_year) & (df_selected['Model'] == selected_model)]
 # st.write(final_df)
 
 
