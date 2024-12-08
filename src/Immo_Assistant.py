@@ -95,10 +95,10 @@ selected_model = st.sidebar.selectbox('Model: ', (sorted_models))
 final_df = df_selected[(df_selected['Year'] == selected_year) & (df_selected['Model'] == selected_model)]
 # st.write(final_df)
 
-
 if not final_df.empty:
-    row_final_df = final_df.iloc[0]
-    for column in final_df.columns:
+    final_df_dropped_column = final_df.drop(columns=['Unnamed: 0'])
+    row_final_df = final_df_dropped_column.iloc[0]
+    for column in final_df_dropped_column.columns:
         st.write (f'''**:red[{column}:]** {row_final_df[column]}''')
 else:
     st.write("Year/Make/Model not avaiable in the data base")
