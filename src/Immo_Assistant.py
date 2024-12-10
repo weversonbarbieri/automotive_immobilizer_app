@@ -15,7 +15,7 @@ df = pd.read_excel(df_content)
 # Converting all values in column Model to string, as some of models are numbers, for instance BMWs 318, 328, 525
 df = df.astype({'Model':'string'})
 
-# Store the urls in a variable
+# Store the Github urls into the variables below
 url_acura = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_acura_updated.xlsx'
 url_audi = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_audi_updated.xlsx'
 url_bmw = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_bmw_updated.xlsx'
@@ -51,7 +51,7 @@ url_toyota = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/
 url_vw = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/dataframe_each_make_xlsx_file/df_vw_updated.xlsx' 
 
 
-# Create a dictionary with the dataframes from each make
+# Create a dataframe with all URLs from GitHub
 dataframes_urls = pd.DataFrame({'Makes': ['Acura', 'Audi', 'BMW','Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Dodge', 'Fiat', 'Ford', 'GMC',
                                            'Honda', 'Hummer', 'infiniti', 'Jaguar', 'Jeep', 'Land Rover', 'Lexus', 'Lincoln', 'Mazda', 'Mercury',
                                            'Mini', 'Mitsubishi', 'Nissan', 'Oldsmobile', 'Plymouth', 'Pontiac', 'Rolls-Royce', 'Saturn', 'Scion', 
@@ -61,19 +61,30 @@ dataframes_urls = pd.DataFrame({'Makes': ['Acura', 'Audi', 'BMW','Buick', 'Cadil
                                 url_lincoln, url_mazda, url_mercury, url_mini, url_mitsubishi, url_nissan, url_oldsmobile, url_plymouth, 
                                 url_pontiac, url_rolls_royce, url_saturn, url_scion, url_subaru, url_toyota, url_vw]})
 
-# STREAMLIT CODE
+#--------------------------------------------------------------------------------------------------------#
+#                                            STREAMLIT CODE                                              #
+#--------------------------------------------------------------------------------------------------------#
 
-# Sort and show the years in a sidebar
+# This application uses 2 types dataframes based on what the user selects. The main one where all makes are located. 
+# It will be used to show the years and makes available at first.
+# The 2nd dataframe is the one created for each make and stored the URLs into the dataframe named 'dataframes_urls'.
+# Therefore, when mentioning the dataframe created for each make below, let's call it make/dataframe and the main the data from the dataframe named df
+
+# Get a list w/ unique years from the main df
 years = df['Year'].unique()
+# Sort the years list
 sorted_years = sorted(years)
+# Show the sorted year list at the sidebar
 selected_year = st.sidebar.selectbox('Year: ', (sorted_years))
 
-# Same procedure with the makes
+# Get a unique make list from the main df
 makes = df['Make'].unique()
+# Sort the make list
 sorted_makes = sorted(makes)
+# Show the sorted makes list at the sidebar
 selected_make = st.sidebar.selectbox('Make: ', (sorted_makes))
 
-# Function to convert the url link to .xlsx file
+# Function to convert the url link to .xlsx file w/ the make/dataframe 
 def convert_url_to_xlsx(url_make):
     # Store the raw content from the url link into a variable
     get_url = requests.get(url_make)
@@ -82,25 +93,41 @@ def convert_url_to_xlsx(url_make):
     # Return the bytes content into .xlsx file
     return pd.read_excel(get_content)
 
+# Use the make selected by the user to select the url link w/ .xlsx file containing the dataframe
 filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 
+# Loop to get the index from the dataframe where the url link is located 
 for index in filtered_make.index:
+    # Store the link in a variable
     index_selected = index
 
+# Filter the url link based on the index and the column it is located
 selected_url = filtered_make.at[index_selected, 'URLs']
-df_selected = convert_url_to_xlsx(selected_url)
-models = df_selected['Model'].unique()
-sorted_models = sorted(models)
-selected_model = st.sidebar.selectbox('Model: ', (sorted_models))
-final_df = df_selected[(df_selected['Year'] == selected_year) & (df_selected['Model'] == selected_model)]
-# st.write(final_df)
 
+# Call the function to convert the url link from the GitHub w/ the dataframe from the spefic make selected by the user, to .xlsx file
+df_selected = convert_url_to_xlsx(selected_url)
+
+# Get a list w/ unique models from the dataframe selected
+models = df_selected['Model'].unique()
+# Sort the models
+sorted_models = sorted(models)
+# Show the models at the sidebar
+selected_model = st.sidebar.selectbox('Model: ', (sorted_models))
+# Filter the dataframe based on the year and model selected
+final_df = df_selected[(df_selected['Year'] == selected_year) & (df_selected['Model'] == selected_model)]
+
+# Condition to check the status of the final df after selecting year/make/model
 if not final_df.empty:
+    # For an unknown reason the index from the main df appears, this drops it
     final_df_dropped_column = final_df.drop(columns=['Unnamed: 0'])
+    # Get the data/values from the final df based on the index
     row_final_df = final_df_dropped_column.iloc[0]
+    # Loop to get the column names from the final fd
     for column in final_df_dropped_column.columns:
+        # Print the columns and their elements on the application
         st.write (f'''**:red[{column}:]** {row_final_df[column]}''')
 else:
+    # Print the following message when the final df is empty
     st.write("Year/Make/Model not avaiable in the data base")
 
 
