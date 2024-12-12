@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import requests
-import openpyxl
 
 # Get the url containing the main dataframe from the remote repository
 url_df = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/data/year_make_model_df.xlsx'
