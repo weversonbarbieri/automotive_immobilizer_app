@@ -61,7 +61,7 @@ url_vw = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main
 
 # Create a dataframe with all URLs from GitHub
 dataframes_urls = pd.DataFrame({'Makes': ['Acura', 'Audi', 'BMW','Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Dodge', 'Fiat', 'Ford', 'GMC',
-                                           'Honda', 'Hummer', 'infiniti', 'Jaguar', 'Jeep', 'Land Rover', 'Lexus', 'Lincoln', 'Mazda', 'Mercury',
+                                           'Honda', 'Hummer', 'Infiniti', 'Jaguar', 'Jeep', 'Land Rover', 'Lexus', 'Lincoln', 'Mazda', 'Mercury',
                                            'Mini', 'Mitsubishi', 'Nissan', 'Oldsmobile', 'Plymouth', 'Pontiac', 'Rolls-Royce', 'Saturn', 'Scion', 
                                            'Subaru', 'Toyota', 'Volkswagen'],
                                 'URLs': [url_acura, url_audi, url_bmw, url_buick, url_cadillac, url_chevrolet, url_chrysler, url_dodge, url_fiat, 
@@ -104,7 +104,6 @@ def convert_url_to_xlsx(url_make):
 # Use the make selected by the user to select the url link w/ .xlsx file containing the dataframe
 filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 
-index_selected = None
 # Loop to get the index from the dataframe where the url link is located 
 for index in filtered_make.index:
     # Store the index in a variable
