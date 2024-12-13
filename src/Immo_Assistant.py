@@ -3,6 +3,13 @@ import pandas as pd
 import requests
 import openpyxl
 
+
+# PROJECT NEXT STEPS:
+# ADICIONAR UM COMENTARIO AQUI O MOTIVO PELO QUAL ESSA BIBLIOTECA FOI ADICIONADA, BEM COMO A PASTA REQUIREMENTS.TXT ADICIONADA TBM E AS BIBLIOTECAS.
+# CORRIGIR O ERRO DA MONTADORA INFINITI.
+# CORRIGIR DE concat([df_ford_new, df_lincoln_new]) PARA concat([df_lincoln_new, df_lincoln_new])
+
+
 # Get the url containing the main dataframe from the remote repository
 url_df = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/data/year_make_model_df.xlsx'
 # Requests the HTTP from the GitHub URL
@@ -97,6 +104,7 @@ def convert_url_to_xlsx(url_make):
 # Use the make selected by the user to select the url link w/ .xlsx file containing the dataframe
 filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 
+index_selected = None
 # Loop to get the index from the dataframe where the url link is located 
 for index in filtered_make.index:
     # Store the link in a variable
