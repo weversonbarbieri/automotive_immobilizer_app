@@ -104,7 +104,7 @@ def convert_url_to_xlsx(url_make):
 # Use the make selected by the user to select the url link w/ .xlsx file containing the dataframe
 filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 
-index_selected = 0
+index_selected = None
 # Loop to get the index from the dataframe where the url link is located 
 for index in filtered_make.index:
     # Store the index in a variable
