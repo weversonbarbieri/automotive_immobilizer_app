@@ -107,7 +107,7 @@ filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 index_selected = 0
 # Loop to get the index from the dataframe where the url link is located 
 for index in filtered_make.index:
-    # Store the link in a variable
+    # Store the index in a variable
     index_selected = index
 
 # Filter the url link based on the index and the column it is located
