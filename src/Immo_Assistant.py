@@ -4,9 +4,14 @@ import requests
 import openpyxl
 
 
-# PROJECT NEXT STEPS:
-# ADICIONAR UM COMENTARIO AQUI O MOTIVO PELO QUAL ESSA BIBLIOTECA FOI ADICIONADA, BEM COMO A PASTA REQUIREMENTS.TXT ADICIONADA TBM E AS BIBLIOTECAS.
-# CORRIGIR DE concat([df_ford_new, df_lincoln_new]) PARA concat([df_lincoln_new, df_lincoln_new])
+#---------------------------------------- openpyxl -------------------------------------------#
+# When deploying the application on Streamlit, the error 'ImportError: Missing optional dependency 'openpyxl'' occurred, 
+# indicating that pandas suggests installing this library to handle Excel files.
+
+
+#----------------------------------- requirements.txt -------------------------------------------#
+# The 'ModuleNotFoundError' error occurred, indicating that Streamlit requires the creation of a file named requirements.txt, where the .py file is located, 
+# listing all the libraries used in the project within this file.
 
 
 # Get the url containing the main dataframe from the remote repository
