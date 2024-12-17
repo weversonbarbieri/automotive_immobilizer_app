@@ -13,6 +13,19 @@ import openpyxl
 # The 'ModuleNotFoundError' error occurred, indicating that Streamlit requires the creation of a file named requirements.txt, where the .py file is located, 
 # listing all the libraries used in the project within this file.
 
+st.set_page_config(
+    # Shows the page title
+    page_title='Immobilizer Assistant',
+    # Shows the page icon on the browser tab.
+    page_icon=':closed_lock_with_key:',
+    # Set the position of the results after selecting make/year/model
+    layout='centered',
+    initial_sidebar_state='expanded'
+)
+
+# Shows the header using HTML.
+st.write("<div align='left'><h2 style='font-size: 20px;'><i>Please, select Make, Year and Model desired:</i></h2></div>", unsafe_allow_html=True)
+
 
 # Get the url containing the main dataframe from the remote repository
 url_df = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/data/year_make_model_df.xlsx'
@@ -83,20 +96,24 @@ dataframes_urls = pd.DataFrame({'Makes': ['Acura', 'Audi', 'BMW','Buick', 'Cadil
 # Therefore, when mentioning the dataframe created for each make below, let's call it make/dataframe and the main the data from the dataframe named df
 
 # Get a list w/ unique years from the main df
-years = df['Year'].unique()
+makes_list = df['Make'].unique()
 # Sort the years list
-sorted_years = sorted(years)
+sorted_makes = makes_list.sort()
 # Show the sorted year list at the sidebar
-selected_year = st.sidebar.selectbox('Year: ', (sorted_years))
+selected_make = st.sidebar.selectbox('Make: ', (makes_list))
 
-# Get a unique make list from the main df
-makes = df['Make'].unique()
-# Sort the make list
-sorted_makes = sorted(makes)
-# Show the sorted makes list at the sidebar
-selected_make = st.sidebar.selectbox('Make: ', (sorted_makes))
+# Use the make selected by the user to select the url link w/ .xlsx file from the df containing the dataframes to each make
+df_selected = dataframes_urls[dataframes_urls['Makes'] == selected_make]
 
-# Function to convert the url link to .xlsx file w/ the make/dataframe 
+# Loop to get the index from the dataframe where the url link is located 
+for index in df_selected.index:
+    # Store the index in a variable
+    index_selected = index
+
+# Filter the row with the url link based on the index and the column it is located
+selected_url = df_selected.at[index_selected, 'URLs']
+
+# Function to convert the url link to .xlsx file w/ the make/dataframe
 def convert_url_to_xlsx(url_make):
     # Store the raw content from the url link into a variable
     get_url = requests.get(url_make)
@@ -105,42 +122,41 @@ def convert_url_to_xlsx(url_make):
     # Return the bytes content into .xlsx file
     return pd.read_excel(get_content)
 
-# Use the make selected by the user to select the url link w/ .xlsx file containing the dataframe
-filtered_make = dataframes_urls[dataframes_urls['Makes'] == selected_make]
-
-# Loop to get the index from the dataframe where the url link is located 
-for index in filtered_make.index:
-    # Store the index in a variable
-    index_selected = index
-
-# Filter the url link based on the index and the column it is located
-selected_url = filtered_make.at[index_selected, 'URLs']
-
 # Call the function to convert the url link from the GitHub w/ the dataframe from the spefic make selected by the user, to .xlsx file
 df_selected = convert_url_to_xlsx(selected_url)
 
-# Get a list w/ unique models from the dataframe selected
-models = df_selected['Model'].unique()
-# Sort the models
+# Get a unique list with the years avaiable on the df_make selected  
+years = df_selected['Year'].unique()
+# Sort the year list
+sorted_years = sorted(years)
+# Show the sorted years list at the sidebar
+selected_year = st.sidebar.selectbox('Year: ', (sorted_years))
+
+# Filter the df_make based on the year selected
+df_filtered_after_year_selected = df_selected[df_selected['Year'] == selected_year]
+
+# Get a unique list with models available based on the year selected
+models = df_filtered_after_year_selected['Model']
+# Sort the make list
 sorted_models = sorted(models)
-# Show the models at the sidebar
+# Show the sorted makes list at the sidebar
 selected_model = st.sidebar.selectbox('Model: ', (sorted_models))
-# Filter the dataframe based on the year and model selected
-final_df = df_selected[(df_selected['Year'] == selected_year) & (df_selected['Model'] == selected_model)]
 
-# Condition to check the status of the final df after selecting year/make/model
-if not final_df.empty:
-    # For an unknown reason the index from the main df appears, this drops it
-    final_df_dropped_column = final_df.drop(columns=['Unnamed: 0'])
-    # Get the data/values from the final df based on the index
-    row_final_df = final_df_dropped_column.iloc[0]
-    # Loop to get the column names from the final fd
-    for column in final_df_dropped_column.columns:
-        # Print the columns and their elements on the application
-        st.write (f'''**:red[{column}:]** {row_final_df[column]}''')
-else:
-    # Print the following message when the final df is empty
-    st.write("Year/Make/Model not avaiable in the data base")
+# Filter the df_make based on the year selected to obtain the final dataframe
+final_df = df_filtered_after_year_selected[df_filtered_after_year_selected['Model'] == selected_model]
+
+# For an unknown reason the index from the main df appears, this drops it
+final_df_dropped_column = final_df.drop(columns=['Unnamed: 0'])
+# Get the data/values from the final df based on the index
+row_final_df = final_df_dropped_column.iloc[0]
+
+# Loop to get the column names from the final df
+for column in final_df_dropped_column.columns:
+    # Print the columns and their elements on the application
+    st.write (f'''**:red[{column}:]** {row_final_df[column]}''')
 
 
-# python -m streamlit run 'C:\Language_Projects\Language_Projects\Python\Flagship_1\Immo_Assistant.app\src\Immo_Assistant.py'
+
+
+
+# python -m streamlit run 'C:\Language_Projects\Language_Projects\Python\Flagship_1\Immo_Assistant.app\src\immo_assist_test.py'
