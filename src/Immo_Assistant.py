@@ -331,10 +331,10 @@ else:
         elif 'Type B' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)
         # If 'Type C' is found in 'PATS Type' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford Parameter Reset C
-        elif 'Type C' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
+        elif 'pe C' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_parameter_reset_c_url, ford_parameter_reset_c_message, ford_parameter_reset_c_button_label, ford_parameter_reset_c_file_name)
         # If 'Type C' is found in 'PATS Type' and 'Parameter Not Reset Required' in 'ParameterReset', create the download button for Ford PATS Type A
-        elif 'Type C' in row['PATS Type'] and 'Parameter Reset Not Required' in row['ParameterReset']:
+        elif 'pe C' in row['PATS Type'] and 'Parameter Reset Not Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_pats_a_url, ford_pats_a_message, ford_pats_a_button_label, ford_pats_a_file_name)
         # If 'Type E' is found in 'PATS Type' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford Parameter Reset BCFG
         elif 'Type E' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
