@@ -310,7 +310,10 @@ if 'Security' in final_df_dropped_column.columns:
         # If 'PL' is found in 'Security', create the download button for Chevrolet Passlock
         elif 'PL' in row['Security']:
             convert_raw_url_to_download_file(gm_passlock_url, gm_passlock_message, gm_passlock_button_label, gm_passlock_file_name)
-        # If 'PK' is found in 'Security', create the download button for Chevrolet Passkey 2
+        # If 'PK1' is found in 'Security', create the download button for Chevrolet Passkey 2
+        elif 'PK1' in row['Security']:
+            convert_raw_url_to_download_file(gm_pk2_url, gm_pk2_message, gm_pk2_button_label, gm_pk2_file_name)
+        # If 'PK2' is found in 'Security', create the download button for Chevrolet Passkey 2
         elif 'PK2' in row['Security']:
             convert_raw_url_to_download_file(gm_pk2_url, gm_pk2_message, gm_pk2_button_label, gm_pk2_file_name)
         # If 'PK' is found in 'Security', create the download button for Chevrolet Passkey 3
