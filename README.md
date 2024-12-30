@@ -1,5 +1,8 @@
 # Immobilizer Assistant
 
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-brightgreen)
+
 The **Immobilizer Assistant** is an application designed to assist in identifying the security system, download key relearn procedures for various vehicle brands. The application uses dataframes to store information and displays download buttons based on specified conditions.
 
 ## Features
