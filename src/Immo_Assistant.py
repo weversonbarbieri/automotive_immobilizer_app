@@ -199,6 +199,8 @@ for index in df_selected.index:
 # Filter the row with the url link based on the index and the column it is located
 selected_url = df_selected.at[index_selected_df_url, 'URLs']
 
+# Cache the function to avoid reloading the data multiple times
+@st.cache_data
 # Function to convert the url link to .xlsx file w/ the make/dataframe
 def convert_url_to_xlsx(url_make):
     # Store the raw content from the url link into a variable
@@ -301,10 +303,10 @@ if 'Security' in final_df_dropped_column.columns:
         elif 'Type B' in row['Security'] and 'Parameter Reset Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)
         # If 'Type E' is found in 'Security' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS Type E
-        elif 'Type E' in row['Security'] and 'Parameter Not Reset Required' in row['ParameterReset']:
+        elif 'Type E' in row['Security'] and 'Parameter Reset Not Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_pats_e_url, ford_pats_e_message, ford_pats_e_button_label, ford_pats_e_file_name)
         # If 'Type G' is found in 'Security' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS Type G
-        elif 'Type G' in row['Security'] and 'Parameter Not Reset Required' in row['ParameterReset'] :
+        elif 'Type G' in row['Security'] and 'Parameter Reset Not Required' in row['ParameterReset'] :
             convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)      
         # Conditions to identify the CHEVROLET KEY RELEARN PROCEDURE only through the last 2 characteres in the 'Security' column
         # If 'PL' is found in 'Security', create the download button for Chevrolet Passlock
