@@ -321,6 +321,20 @@ if 'Security' in final_df_dropped_column.columns:
         # If 'PK' is found in 'Security', create the download button for Chevrolet Passkey 3
         elif 'PK3' in row['Security']:
             convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
+        elif 'PL3/PK3' in row['Security']:
+            gm_pk3_url = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/docs/PK3.pdf'
+            gm_pk3_message = '"Click on the button to download the PASSKEY 3 Instructions:"' 
+            gm_pk3_button_label = "PASSKEY 3 Procedure"
+            gm_pk3_file_name = "gm_pk3.pdf" 
+
+            gm_passlock_url = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/docs/PASSLOCK.pdf'
+            gm_passlock_message = 'Click on the button to download the PASSLOCK Instructions:'
+            gm_passlock_button_label = 'PASSLOCK Procedure'
+            gm_passlock_file_name = 'gm_passlock.pdf'
+
+            with st.expander('Click here to download the key relearn procedure:'):
+                convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
+                convert_raw_url_to_download_file(gm_passlock_url, gm_passlock_message, gm_passlock_button_label, gm_passlock_file_name)
 # When the dataframe has the column 'PATS Type'. This condition applies to Ford, Lincoln and Mercury because only these 3 makes contains 
 # the column 'PATS Type' in their dataframes  
 else:
