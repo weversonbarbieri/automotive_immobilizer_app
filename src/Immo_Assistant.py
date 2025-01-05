@@ -307,7 +307,10 @@ if 'Security' in final_df_dropped_column.columns:
             convert_raw_url_to_download_file(ford_pats_e_url, ford_pats_e_message, ford_pats_e_button_label, ford_pats_e_file_name)
         # If 'Type G' is found in 'Security' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS Type G
         elif 'Type G' in row['Security'] and 'Parameter Reset Not Required' in row['ParameterReset'] :
-            convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)      
+            convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)
+        # If 'Type G' is found in 'Security' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford PATS Type G
+        elif 'Type G' in row['Security'] and 'Parameter Reset Required' in row['ParameterReset'] :
+            convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)          
         # Conditions to identify the CHEVROLET KEY RELEARN PROCEDURE only through the last 2 characteres in the 'Security' column
         # If 'PL' is found in 'Security', create the download button for Chevrolet Passlock
         elif 'PL' in row['Security']:
