@@ -324,9 +324,9 @@ if 'Security' in final_df_dropped_column.columns:
         # If 'PK' is found in 'Security', create the download button for Chevrolet Passkey 3
         elif 'PK3' in row['Security']:
             convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
+        # If 'PL3' is found in 'Security', create the download button for Chevrolet Passkey 3
         elif 'PL3/PK3' in row['Security']:
             convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
-            convert_raw_url_to_download_file(gm_passlock_url, gm_passlock_message, gm_passlock_button_label, gm_passlock_file_name)
 # When the dataframe has the column 'PATS Type'. This condition applies to Ford, Lincoln and Mercury because only these 3 makes contains 
 # the column 'PATS Type' in their dataframes  
 else:
