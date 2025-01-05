@@ -322,25 +322,14 @@ if 'Security' in final_df_dropped_column.columns:
         elif 'PK3' in row['Security']:
             convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
         elif 'PL3/PK3' in row['Security']:
-            gm_pk3_url = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/docs/PK3.pdf'
-            gm_pk3_message = '"Click on the button to download the PASSKEY 3 Instructions:"' 
-            gm_pk3_button_label = "PASSKEY 3 Procedure"
-            gm_pk3_file_name = "gm_pk3.pdf" 
-
-            gm_passlock_url = 'https://github.com/weversonbarbieri/immobilizer_assistant.app/raw/main/docs/PASSLOCK.pdf'
-            gm_passlock_message = 'Click on the button to download the PASSLOCK Instructions:'
-            gm_passlock_button_label = 'PASSLOCK Procedure'
-            gm_passlock_file_name = 'gm_passlock.pdf'
-
-            with st.expander('Click here to download the key relearn procedure:'):
-                convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
-                convert_raw_url_to_download_file(gm_passlock_url, gm_passlock_message, gm_passlock_button_label, gm_passlock_file_name)
+            convert_raw_url_to_download_file(gm_pk3_url, gm_pk3_message, gm_pk3_button_label, gm_pk3_file_name)
+            convert_raw_url_to_download_file(gm_passlock_url, gm_passlock_message, gm_passlock_button_label, gm_passlock_file_name)
 # When the dataframe has the column 'PATS Type'. This condition applies to Ford, Lincoln and Mercury because only these 3 makes contains 
 # the column 'PATS Type' in their dataframes  
 else:
     # Loop through each row in the dataframe to check the key relearn name in the 'PATS Type' column using part of the key relearn string
     for index, row in final_df_dropped_column.iterrows():
-        # If 'Type A' is found in 'PATS Type' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS Type A
+        # If 'Type A' is found in 'PATS Type' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS Type A procedure
         if 'Type A' in row['PATS Type'] and 'Parameter Reset Not Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_pats_a_url, ford_pats_a_message, ford_pats_a_button_label, ford_pats_a_file_name)
         # If 'Type A' is found in 'PATS Type' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford Parameter Reset BCFG
@@ -352,9 +341,12 @@ else:
         # If 'Type C' is found in 'PATS Type' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford Parameter Reset C
         elif 'pe C' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_parameter_reset_c_url, ford_parameter_reset_c_message, ford_parameter_reset_c_button_label, ford_parameter_reset_c_file_name)
-        # If 'Type C' is found in 'PATS Type' and 'Parameter Not Reset Required' in 'ParameterReset', create the download button for Ford PATS Type A
+        # If 'Type C' is found in 'PATS Type' and 'Parameter Not Reset Required' in 'ParameterReset', create the download button for Ford PATS Type A procedure
         elif 'pe C' in row['PATS Type'] and 'Parameter Reset Not Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_pats_a_url, ford_pats_a_message, ford_pats_a_button_label, ford_pats_a_file_name)
+        # If 'Type D' is found in 'PATS Type' and 'Parameter Reset Not Required' in 'ParameterReset', create the download button for Ford PATS D procedure
+        elif 'Type D' in row['PATS Type'] and 'Parameter Reset Not Required' in row['ParameterReset']:
+            convert_raw_url_to_download_file(ford_pats_d_url, ford_pats_d_message, ford_pats_d_button_label, ford_pats_d_file_name)
         # If 'Type E' is found in 'PATS Type' and 'Parameter Reset Required' in 'ParameterReset', create the download button for Ford Parameter Reset BCFG
         elif 'Type E' in row['PATS Type'] and 'Parameter Reset Required' in row['ParameterReset']:
             convert_raw_url_to_download_file(ford_parameter_reset_bcfg_url, ford_parameter_reset_bcfg_message, ford_parameter_reset_bcfg_button_label, ford_parameter_reset_bcfg_file_name)
