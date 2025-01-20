@@ -23,6 +23,8 @@ st.set_page_config(
     initial_sidebar_state='expanded'
 )
 
+st.write("<div align='center'><h2><i>Immobilizer Assistant</i></h2></div>", unsafe_allow_html=True)
+
 # Shows the header using HTML.
 st.write("<div align='left'><h2 style='font-size: 20px;'><i>Please, select Make, Year and Model desired:</i></h2></div>", unsafe_allow_html=True)
 
