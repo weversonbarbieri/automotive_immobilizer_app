@@ -10,6 +10,7 @@ The **Immobilizer Assistant** is an application designed to assist in identifyin
 - Identification of security system and key relearn procedures for various vehicle brands.
 - Display of download buttons for identified procedures.
 - Support for multiple vehicle makes and models.
+- VIN decode functionality to retrieve vehicle information based on the VIN.
 
 ## Project Structure
 
@@ -52,6 +53,10 @@ The **Immobilizer Assistant** is an application designed to assist in identifyin
     ```
     https://immobilizer-assistant.streamlit.app/
     ```
+
+## VIN Decode Functionality
+
+The application includes a VIN decode functionality to retrieve vehicle information based on the VIN. This feature uses the API `vpic.nhtsa.dot.gov/api` and is available for Toyota and Lexus only, as the security features on these makes are defined based on the trim.
 
 ## Contribution
 
