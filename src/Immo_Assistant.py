@@ -393,18 +393,24 @@ if selected_make == 'Toyota' or selected_make == 'Lexus':
             if key == "Make" or key == "ModelYear" or key == "Model" or key == "Trim" or key == "EngineConfiguration" or key == "EngineCylinders" or key == "DisplacementL":
                 vehicle_info.append(info)
     
+        # Store the year on a variable
+        year = vehicle_info[5]
+
+        # Convert the information 'year' to int64 to match the value year stored to the 'selected_year' 
+        year_converted_to_npint = np.dtype('int64').type(year)
+        
         # Condition to test whether the model decoded matches with the model selected.
-        if vehicle_info[4] != selected_model:
-            st.write("The model decoded does not match the selected model. Please, decode a VIN# that matches the model selected to complete the vehicle decoding.")
+        if year_converted_to_npint == selected_year and vehicle_info[4] == selected_model:
+                # Replace the string '-Shaped' to empty string
+                modified_engineshape = vehicle_info[1].replace("-Shaped", "")
+    
+                # Order the vehicle_info list to show the vehicle information like year/make/model/trim/engine shape/displacement
+                vehicle_info_sorted = [vehicle_info[5], vehicle_info[3], vehicle_info[4], vehicle_info[0] + "L", modified_engineshape + vehicle_info[2], vehicle_info[6]]
+    
+                # Join the vehicle_info_sorted list to show the vehicle information
+                vehicle_final_result = ' '.join(vehicle_info_sorted)
+    
+                # Show the vehicle information on the application
+                st.write(f"{vehicle_final_result}")     
         else:
-            # Replace the string '-Shaped' to empty string
-            modified_engineshape = vehicle_info[1].replace("-Shaped", "")
-    
-            # Order the vehicle_info list to show the vehicle information like year/make/model/trim/engine shape/displacement
-            vehicle_info_sorted = [vehicle_info[5], vehicle_info[3], vehicle_info[4], vehicle_info[0] + "L", modified_engineshape + vehicle_info[2], vehicle_info[6]]
-    
-            # Join the vehicle_info_sorted list to show the vehicle information
-            vehicle_final_result = ' '.join(vehicle_info_sorted)
-    
-            # Show the vehicle information on the application
-            st.write(f"{vehicle_final_result}")
+            st.write("The year/model decoded does not match the selected year/model. Please, decode a VIN# that matches the year/model selected to complete the vehicle decoding.")
