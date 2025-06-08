@@ -76,45 +76,6 @@ CREATE TABLE chevrolet_clonable_table (
 );
 ```
 
-### Common SQL Queries
-
-```sql
--- Find vehicles by make and year
-SELECT model, security 
-FROM year_make_model_table
-WHERE make = 'Ford' AND year = 2020
-ORDER BY model;
-
--- Check clonable hardware status
-SELECT c.model, c.hdw_pn, c.is_this_hardware_clonable
-FROM chevrolet_brands_hdw_table c
-WHERE c.year BETWEEN 2015 AND 2023
-ORDER BY c.year DESC;
-
--- Search security systems by type
-SELECT DISTINCT security, COUNT(*) as count
-FROM year_make_model_table
-GROUP BY security
-HAVING COUNT(*) > 1
-ORDER BY count DESC;
-```
-
-### Storage Buckets
-
-```sql
--- Create storage buckets for procedures
-INSERT INTO storage.buckets (id, name, public)
-VALUES 
-    ('ford_procedures', 'Ford Procedures', false),
-    ('gm_procedures', 'GM Procedures', false),
-    ('toyota_procedures', 'Toyota Procedures', false);
-
--- Set bucket permissions
-CREATE POLICY "Allow authenticated downloads" 
-ON storage.objects FOR SELECT 
-USING (auth.role() = 'authenticated');
-```
-
 ## VIN Decode Functionality
 
 The application includes a VIN decode functionality to retrieve vehicle information based on the VIN. This feature uses the API `vpic.nhtsa.dot.gov/api` and is available for Toyota and Lexus only, as the security features on these makes are defined based on the trim.
@@ -126,10 +87,3 @@ Contributions are welcome! Feel free to open issues and pull requests for improv
 ## Contact
 
 For more information, contact [Weverson Barbieri](https://github.com/weversonbarbieri).
-
-
-
-
-
-
-
