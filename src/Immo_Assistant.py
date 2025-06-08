@@ -249,7 +249,7 @@ row_final_df = final_df_dropped_column.iloc[0]
 
 # Loop to get the column names from the final df
 for column in final_df_dropped_column.columns:
-    # Print the columns and their elements on the application
+    # Print the c lumns and their elements on the application
     st.write (f'''**:red[{column}:]** {row_final_df[column]}''')
 
 # Def function to to convert the a raw url link from GitHub to an available PDF file for download

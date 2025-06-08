@@ -2,57 +2,118 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-brightgreen)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-orange)
 
-The **Immobilizer Assistant** is an application designed to assist in identifying the security system, download key relearn procedures for various vehicle brands. The application uses dataframes to store information and displays download buttons based on specified conditions.
+## Overview
+
+A Python-based application for managing vehicle security system information using Supabase as the backend database. The system handles multiple manufacturers' immobilizer data, including hardware compatibility and cloning capabilities.
+
+## Tech Stack
+
+* Python 3.11+
+* Supabase (PostgreSQL)
+* Pandas for data processing
+* Environment variables for configuration
 
 ## Features
 
-- Identification of security system and key relearn procedures for various vehicle brands.
-- Display of download buttons for identified procedures.
-- Support for multiple vehicle makes and models.
-- VIN decode functionality to retrieve vehicle information based on the VIN.
+- Identification of security system and key relearn procedures for various vehicle brands
+- Display of download buttons for identified procedures
+- Support for multiple vehicle makes and models
+- VIN decode functionality to retrieve vehicle information
+- Supabase storage for procedure documents
+- Real-time database updates
 
-## Project Structure
+## Database Setup
 
-- `src/`: Contains the main source code for the application.
-  - `Immo_Assistant.py`: Main application file containing the logic to identify and display download buttons and the security system.
-- `data/`: Directory containing data files used by the application.
-- `docs/`: Directory containing documentation files for the project.
-- `notebooks/`: Directory containing Jupyter notebooks for data analysis and experimentation.
-- `dataframe_each_make_xlsx_file/`: Directory containing Excel files with dataframes for each vehicle brand.
-- `venv/`: Virtual environment directory containing installed dependencies.
-- `requirements.txt`: File containing a list of dependencies required for the project.
+### Supabase Configuration
 
-## Installation
+1. Create `.env` file:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+```
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/weversonbarbieri/immobilizer_assistant.app.git
-    cd immobilizer_assistant.app
-    ```
+2. Initialize Supabase client:
+```python
+from supabase import create_client
+supabase = create_client(supabase_url, supabase_key)
+```
 
-2. Create and activate a virtual environment:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
+### Database Schema
 
-3. Install the dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+```sql
+-- Main vehicle data table
+CREATE TABLE year_make_model_table (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    year INTEGER,
+    make VARCHAR(50),
+    model VARCHAR(100),
+    security VARCHAR(50),
+    parameter_reset BOOLEAN,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW()),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW())
+);
 
-## Usage
+-- GM brands hardware table
+CREATE TABLE chevrolet_brands_hdw_table (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    year INTEGER,
+    make VARCHAR(50),
+    model VARCHAR(100),
+    security VARCHAR(50),
+    hdw_pn VARCHAR(50),
+    is_this_hardware_clonable BOOLEAN,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW())
+);
 
-1. Run the application:
-    ```bash
-    streamlit run src/Immo_Assistant.py
-    ```
+-- Clonable modules reference table
+CREATE TABLE chevrolet_clonable_table (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    ecm_hardware VARCHAR(50),
+    cloning_status VARCHAR(20),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW())
+);
+```
 
-2. Access the application in your browser at:
-    ```
-    https://immobilizer-assistant.streamlit.app/
-    ```
+### Common SQL Queries
+
+```sql
+-- Find vehicles by make and year
+SELECT model, security 
+FROM year_make_model_table
+WHERE make = 'Ford' AND year = 2020
+ORDER BY model;
+
+-- Check clonable hardware status
+SELECT c.model, c.hdw_pn, c.is_this_hardware_clonable
+FROM chevrolet_brands_hdw_table c
+WHERE c.year BETWEEN 2015 AND 2023
+ORDER BY c.year DESC;
+
+-- Search security systems by type
+SELECT DISTINCT security, COUNT(*) as count
+FROM year_make_model_table
+GROUP BY security
+HAVING COUNT(*) > 1
+ORDER BY count DESC;
+```
+
+### Storage Buckets
+
+```sql
+-- Create storage buckets for procedures
+INSERT INTO storage.buckets (id, name, public)
+VALUES 
+    ('ford_procedures', 'Ford Procedures', false),
+    ('gm_procedures', 'GM Procedures', false),
+    ('toyota_procedures', 'Toyota Procedures', false);
+
+-- Set bucket permissions
+CREATE POLICY "Allow authenticated downloads" 
+ON storage.objects FOR SELECT 
+USING (auth.role() = 'authenticated');
+```
 
 ## VIN Decode Functionality
 
